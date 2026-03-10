@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Skill Gap Analyzer</title>
+    <link rel="stylesheet" href="Skill_gap_analyzer.CSS">
+    <style>
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 36px;
+            font-weight: bold;
+            color: #667eea;
+            margin: 10px 0;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .skill-progress {
+            margin-bottom: 20px;
+        }
+
+        .skill-progress .label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="logo">Skill Gap Analyzer</h1>
+        <nav>
+            <a href="Skill_gap_analyzer.html">Home</a>
+            <a href="Skill_gap_analyzer_backpage.html">Dashboard</a>
+            <a href="login.html">Logout</a>
+        </nav>
+    </header>
+
+    <div class="dashboard">
+        <h2>Analytics Dashboard</h2>
+        
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div>Overall Match</div>
+                <div class="stat-value">72%</div>
+                <div style="color: #27ae60;">↑ 8%</div>
+            </div>
+            <div class="stat-card">
+                <div>Skills Mastered</div>
+                <div class="stat-value">5/12</div>
+                <div style="color: #f39c12;">42% complete</div>
+            </div>
+            <div class="stat-card">
+                <div>Learning Hours</div>
+                <div class="stat-value">127</div>
+                <div style="color: #3498db;">This month</div>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h3>Skill Progress</h3>
+            <div class="skill-progress">
+                <div class="label"><span>HTML/CSS</span> <span>85%</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:85%"></div></div>
+            </div>
+            <div class="skill-progress">
+                <div class="label"><span>JavaScript</span> <span>70%</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:70%"></div></div>
+            </div>
+            <div class="skill-progress">
+                <div class="label"><span>React</span> <span>45%</span></div>
+                <div class="progress-bar"><div class="progress-fill" style="width:45%"></div></div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2026 Skill Gap Analyzer</p>
+    </footer>
+</body>
+</html>

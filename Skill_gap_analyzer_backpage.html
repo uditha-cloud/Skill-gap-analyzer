@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Skill Gap Analyzer</title>
+    <link rel="stylesheet" href="Skill_gap_analyzer.CSS">
+    <style>
+        .welcome-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(255,255,255,0.2);
+            padding: 8px 20px;
+            border-radius: 25px;
+            font-size: 14px;
+        }
+
+        .gap-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .priority-high { width: 10px; height: 10px; background: #e74c3c; border-radius: 50%; }
+        .priority-medium { width: 10px; height: 10px; background: #f39c12; border-radius: 50%; }
+        .priority-low { width: 10px; height: 10px; background: #3498db; border-radius: 50%; }
+
+        .course-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .course-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+        }
+
+        .course-details {
+            flex: 1;
+        }
+
+        .course-title {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .course-meta {
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+
+        .match-badge {
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 12px;
+            background: #e8f4f8;
+            color: #3498db;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 30px 0;
+            flex-wrap: wrap;
+        }
+
+        .message {
+            text-align: center;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: none;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .timeline-badge {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1 class="logo">Skill Gap Analyzer</h1>
+    <nav>
+        <a href="Skill_gap_analyzer.html">Home</a>
+        <a href="#about">About</a>
+        <a href="#features">Features</a>
+        <a href="Skill_gap_analyzer_backpage.html" class="active">Dashboard</a>
+        <a href="login.html" onclick="return confirm('Are you sure you want to logout?')">Logout</a>
+    </nav>
+</header>
+
+<div class="dashboard">
+    <!-- Welcome Section -->
+    <div class="welcome-section">
+        <div>
+            <h2>Welcome back, Uditha! 👋</h2>
+            <p>Track your skill progress and close the gaps</p>
+        </div>
+        <div style="display: flex; gap: 10px;">
+            <span class="badge">🏆 Pro Member</span>
+            <span class="badge">📊 7 Skills Tracked</span>
+        </div>
+    </div>
+
+    <!-- Update Skills Card -->
+    <div class="card" style="margin-bottom: 25px;">
+        <div class="card-header">
+            <h3>🔄 Update Your Skills</h3>
+        </div>
+        <form id="updateSkillsForm" onsubmit="return updateSkills()">
+            <div class="skill-update-row">
+                <label>HTML/CSS:</label>
+                <input type="range" id="updateHTML" min="0" max="100" value="85">
+                <span id="htmlValue">85%</span>
+            </div>
+            <div class="skill-update-row">
+                <label>JavaScript:</label>
+                <input type="range" id="updateJS" min="0" max="100" value="70">
+                <span id="jsValue">70%</span>
+            </div>
+            <div class="skill-update-row">
+                <label>React:</label>
+                <input type="range" id="updateReact" min="0" max="100" value="45">
+                <span id="reactValue">45%</span>
+            </div>
+            <div class="skill-update-row">
+                <label>Python:</label>
+                <input type="range" id="updatePython" min="0" max="100" value="60">
+                <span id="pythonValue">60%</span>
+            </div>
+            <div class="skill-update-row">
+                <label>SQL:</label>
+                <input type="range" id="updateSQL" min="0" max="100" value="55">
+                <span id="sqlValue">55%</span>
+            </div>
+            <div class="skill-update-row">
+                <label>Git:</label>
+                <input type="range" id="updateGit" min="0" max="100" value="40">
+                <span id="gitValue">40%</span>
+            </div>
+            <button type="submit" class="btn btn-primary" style="width: 100%;">Update All Skills</button>
+        </form>
+    </div>
+
+    <!-- Dashboard Grid -->
+    <div class="dashboard-grid">
+        <!-- Current Skills Card -->
+        <div class="card">
+            <div class="card-header">
+                <h3>📊 Your Skills</h3>
+            </div>
+            <ul class="skills-list">
+                <li>
+                    <span class="skill-name">HTML/CSS</span>
+                    <span class="skill-level level-high" id="displayHTML">85%</span>
+                </li>
+                <li>
+                    <span class="skill-name">JavaScript</span>
+                    <span class="skill-level level-medium" id="displayJS">70%</span>
+                </li>
+                <li>
+                    <span class="skill-name">React</span>
+                    <span class="skill-level level-low" id="displayReact">45%</span>
+                </li>
+                <li>
+                    <span class="skill-name">Python</span>
+                    <span class="skill-level level-medium" id="displayPython">60%</span>
+                </li>
+                <li>
+                    <span class="skill-name">SQL</span>
+                    <span class="skill-level level-medium" id="displaySQL">55%</span>
+                </li>
+                <li>
+                    <span class="skill-name">Git</span>
+                    <span class="skill-level level-low" id="displayGit">40%</span>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Match Score Card -->
+        <div class="card">
+            <div class="card-header">
+                <h3>📈 Match Score</h3>
+            </div>
+            <div style="text-align: center; padding: 20px;">
+                <div style="font-size: 48px; font-weight: bold; color: #667eea;" id="matchScore">65</div>
+                <div style="font-size: 14px; color: #7f8c8d;">out of 100</div>
+                <div class="progress-bar" style="margin: 20px 0;">
+                    <div class="progress-fill" id="progressBar" style="width: 65%;"></div>
+                </div>
+                <p style="color: #27ae60;">↑ 5% from last month</p>
+            </div>
+        </div>
+
+        <!-- Gap Analysis Card -->
+        <div class="card">
+            <div class="card-header">
+                <h3>🔍 Gap Analysis</h3>
+            </div>
+            <div class="gap-item">
+                <span class="priority-high"></span>
+                <div style="flex: 1;"><strong>TypeScript</strong> - Critical</div>
+                <span class="match-badge">Missing</span>
+            </div>
+            <div class="gap-item">
+                <span class="priority-high"></span>
+                <div style="flex: 1;"><strong>AWS</strong> - Required</div>
+                <span class="match-badge">Missing</span>
+            </div>
+            <div class="gap-item">
+                <span class="priority-medium"></span>
+                <div style="flex: 1;"><strong>React</strong> - Need 70%+</div>
+                <span class="match-badge">65%</span>
+            </div>
+            <div class="gap-item">
+                <span class="priority-low"></span>
+                <div style="flex: 1;"><strong>Git</strong> - Need practice</div>
+                <span class="match-badge">80%</span>
+            </div>
+        </div>
+
+        <!-- Recommendations Card -->
+        <div class="card">
+            <div class="card-header">
+                <h3>📚 Recommendations</h3>
+            </div>
+            <div class="course-item">
+                <div class="course-icon">⚛️</div>
+                <div class="course-details">
+                    <div class="course-title">React - Complete Guide</div>
+                    <div class="course-meta">40 hours • Beginner</div>
+                </div>
+                <span class="match-badge">95% match</span>
+            </div>
+            <div class="course-item">
+                <div class="course-icon">☁️</div>
+                <div class="course-details">
+                    <div class="course-title">AWS Certified Developer</div>
+                    <div class="course-meta">30 hours • Intermediate</div>
+                </div>
+                <span class="match-badge">90% match</span>
+            </div>
+            <div class="course-item">
+                <div class="course-icon">🐙</div>
+                <div class="course-details">
+                    <div class="course-title">Git & GitHub Masterclass</div>
+                    <div class="course-meta">15 hours • Beginner</div>
+                </div>
+                <span class="match-badge">85% match</span>
+            </div>
+        </div>
+
+        <!-- Learning Path Card -->
+        <div class="card">
+            <div class="card-header">
+                <h3>🗓️ Learning Path</h3>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-badge">1</div>
+                <div>
+                    <h4>Month 1: React</h4>
+                    <p>Complete React fundamentals</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-badge">2</div>
+                <div>
+                    <h4>Month 2: TypeScript</h4>
+                    <p>Learn TypeScript with React</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-badge">3</div>
+                <div>
+                    <h4>Month 3: AWS</h4>
+                    <p>Cloud certification</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons">
+        <button class="btn btn-primary" onclick="downloadReport()">📥 Download Report</button>
+        <button class="btn btn-secondary" onclick="resetToDefault()">↩️ Reset to Default</button>
+    </div>
+
+    <div id="message" class="message"></div>
+</div>
+
+<footer>
+    <p>© 2026 Skill Gap Analyzer | Designed by Uditha</p>
+</footer>
+
+<script>
+    // Initialize sliders
+    document.addEventListener('DOMContentLoaded', function() {
+        const sliders = ['updateHTML', 'updateJS', 'updateReact', 'updatePython', 'updateSQL', 'updateGit'];
+        sliders.forEach(id => {
+            const slider = document.getElementById(id);
+            const span = document.getElementById(id.replace('update', '').toLowerCase() + 'Value');
+            slider.addEventListener('input', function() {
+                span.textContent = this.value + '%';
+            });
+        });
+        loadSavedData();
+    });
+
+    function loadSavedData() {
+        const saved = JSON.parse(localStorage.getItem('skillData')) || {};
+        const skills = {
+            HTML: saved.HTML || 85,
+            JS: saved.JS || 70,
+            React: saved.React || 65,
+            Python: saved.Python || 75,
+            SQL: saved.SQL || 75,
+            Git: saved.Git || 80
+        };
+
+        for(let [skill, value] of Object.entries(skills)) {
+            const slider = document.getElementById(`update${skill}`);
+            const display = document.getElementById(`display${skill}`);
+            const span = document.getElementById(`${skill.toLowerCase()}Value`);
+            
+            if(slider) slider.value = value;
+            if(display) display.textContent = value + '%';
+            if(span) span.textContent = value + '%';
+        }
+        
+        updateMatchScore();
+    }
+
+    function updateSkills() {
+        const skills = {
+            HTML: document.getElementById('updateHTML').value,
+            JS: document.getElementById('updateJS').value,
+            React: document.getElementById('updateReact').value,
+            Python: document.getElementById('updatePython').value,
+            SQL: document.getElementById('updateSQL').value,
+            Git: document.getElementById('updateGit').value
+        };
+
+        for(let [skill, value] of Object.entries(skills)) {
+            document.getElementById(`display${skill}`).textContent = value + '%';
+            document.getElementById(`${skill.toLowerCase()}Value`).textContent = value + '%';
+        }
+
+        localStorage.setItem('skillData', JSON.stringify(skills));
+        updateMatchScore();
+        showMessage('✅ Skills updated successfully!', 'success');
+        return false;
+    }
+
+    function updateMatchScore() {
+        const values = [
+            parseInt(document.getElementById('displayHTML').textContent),
+            parseInt(document.getElementById('displayJS').textContent),
+            parseInt(document.getElementById('displayReact').textContent),
+            parseInt(document.getElementById('displayPython').textContent),
+            parseInt(document.getElementById('displaySQL').textContent),
+            parseInt(document.getElementById('displayGit').textContent)
+        ];
+        
+        const avg = Math.round(values.reduce((a,b) => a + b, 0) / values.length);
+        document.getElementById('matchScore').textContent = avg;
+        document.getElementById('progressBar').style.width = avg + '%';
+    }
+
+    function downloadReport() {
+        const skills = [
+            `HTML/CSS: ${document.getElementById('displayHTML').textContent}`,
+            `JavaScript: ${document.getElementById('displayJS').textContent}`,
+            `React: ${document.getElementById('displayReact').textContent}`,
+            `Python: ${document.getElementById('displayPython').textContent}`,
+            `SQL: ${document.getElementById('displaySQL').textContent}`,
+            `Git: ${document.getElementById('displayGit').textContent}`
+        ].join('\n');
+
+        const report = `SKILL GAP REPORT\n${'='.repeat(30)}\n\n${skills}\n\nMatch Score: ${document.getElementById('matchScore').textContent}%`;
+        
+        const blob = new Blob([report], {type: 'text/plain'});
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'skill_report.txt';
+        a.click();
+        showMessage('✅ Report downloaded!', 'success');
+    }
+
+    function resetToDefault() {
+        if(confirm('Reset all skills to default?')) {
+            localStorage.removeItem('skillData');
+            loadSavedData();
+            showMessage('✅ Reset to default!', 'success');
+        }
+    }
+
+    function showMessage(text, type) {
+        const msg = document.getElementById('message');
+        msg.textContent = text;
+        msg.className = 'message ' + type;
+        msg.style.display = 'block';
+        setTimeout(() => msg.style.display = 'none', 3000);
+    }
+</script>
+
+</body>
+</html>
